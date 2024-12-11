@@ -5,6 +5,9 @@ use TCG\Voyager\Facades\Voyager;
 use App\Banner;
 use App\PopularDest;
 use App\TourCategory;
+use App\Service;
+use App\Package;
+use App\Gallery;
 
 Route::get('/', function () {
     $banners = Banner::orderBy('created_at', 'desc')->get();
@@ -13,7 +16,12 @@ Route::get('/', function () {
     $popularPAK = PopularDest::where('country', 'Pakistan')->orderBy('created_at', 'desc')->get();
     $tourNat = TourCategory::where('type', 'National')->orderBy('created_at', 'desc')->get();
     $tourInter = TourCategory::where('type', 'International')->orderBy('created_at', 'desc')->get();
-    return view('home', compact('banners', 'popular', 'popularUSA', 'popularPAK', 'tourNat', 'tourInter'));
+    $service = Service::orderBy('created_at', 'desc')->get();
+    $package = Package::orderBy('created_at', 'desc')->get();
+    $gallery = Gallery::orderBy('created_at', 'desc')->get();
+    $galleryNat = Gallery::where('category', 'National')->orderBy('created_at', 'desc')->get();
+    $galleryInter = Gallery::where('category', 'International')->orderBy('created_at', 'desc')->get();
+    return view('home', compact('banners', 'popular', 'popularUSA', 'popularPAK', 'tourNat', 'tourInter', 'service', 'package', 'gallery', 'galleryNat', 'galleryInter'));
 });
 
 
